@@ -82,7 +82,8 @@ app.delete('/products/:id', async(req, res) =>{
 
 
 mongoose.set('strictQuery', false)
-mongoose.connect('mongodb://0.0.0.0:27017/demoapi')
+// mongoose.connect('mongodb://0.0.0.0:27017/demoapi')
+    mongoose.connect('mongodb+srv://narmadhapalani:sutSDusseB6Uh3gZ@cluster01.qjlmy2k.mongodb.net/?retryWrites=true&w=majority&appName=Cluster01')
 .then(()=>{
     console.log("connected to mongo db")
 }).catch((error)=>{
