@@ -18,73 +18,74 @@ app.get('/', (req, res) => {
 app.get('/blog', (req, res) => {
     res.send('hello blog, my name is narmadha');
 })
-app.get('/products', async(req, res) => {
+app.get('/products', async (req, res) => {
     try {
         const products = await Product.find({});
         res.status(200).json(products);
     } catch (error) {
-        res.status(500).json({message: error.message})
+        res.status(500).json({ message: error.message })
     }
 })
 
-app.get('/products/:id', async(req, res) =>{
+app.get('/products/:id', async (req, res) => {
     try {
-        const {id} = req.params;
+        const { id } = req.params;
         const product = await Product.findById(id);
         res.status(200).json(product);
     } catch (error) {
-        res.status(500).json({message: error.message})
+        res.status(500).json({ message: error.message })
     }
 })
- 
-app.post('/product',async(req,res)=>{
-   try{
-    const product= await Product.create(req.body)
-    res.status(200).json(product);
 
-   }catch(error){
-    console.log(error.message);
-    res.status(500).json({message:error.message})
-   }
+app.post('/product', async (req, res) => {
+    try {
+        const product = await Product.create(req.body)
+        res.status(200).json(product);
+
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ message: error.message })
+    }
 })
 //update
-app.put('/products/:id', async(req, res) => {
+app.put('/products/:id', async (req, res) => {
     try {
-        const {id} = req.params;
+        const { id } = req.params;
         const product = await Product.findByIdAndUpdate(id, req.body);
-    
-        if(!product){
-            return res.status(404).json({message: `cannot find any product with ID ${id}`})
+
+        if (!product) {
+            return res.status(404).json({ message: `cannot find any product with ID ${id}` })
         }
         const updatedProduct = await Product.findById(id);
         res.status(200).json(updatedProduct);
-        
+
     } catch (error) {
-        res.status(500).json({message: error.message})
+        res.status(500).json({ message: error.message })
     }
 })
 // delete a product
 
-app.delete('/products/:id', async(req, res) =>{
+app.delete('/products/:id', async (req, res) => {
     try {
-        const {id} = req.params;
+        const { id } = req.params;
         const product = await Product.findByIdAndDelete(id);
-        if(!product){
-            return res.status(404).json({message: `cannot find any product with ID ${id}`})
+        if (!product) {
+            return res.status(404).json({ message: `cannot find any product with ID ${id}` })
         }
         res.status(200).json(product);
-        
+
     } catch (error) {
-        res.status(500).json({message: error.message})
+        res.status(500).json({ message: error.message })
     }
 })
 
 
 
 mongoose.set('strictQuery', false)
-mongoose.connect('mongodb://0.0.0.0:27017/demoapi')
-.then(()=>{
-    console.log("connected to mongo db")
-}).catch((error)=>{
-    console.log(error)
-})
+// mongoose.connect('mongodb://0.0.0.0:27017/demoapi')
+mongoose.connect('mongodb+srv://narmadhapalanivelu:l8gg9dPyoyRoCDRw@nodeapi.f4hcf4u.mongodb.net/nodeapi?retryWrites=true&w=majority&appName=nodeapi')
+    .then(() => {
+        console.log("connected to mongo db")
+    }).catch((error) => {
+        console.log(error)
+    })
